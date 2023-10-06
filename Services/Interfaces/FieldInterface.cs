@@ -6,23 +6,23 @@ namespace Angularassessment.Services.Interfaces
 {
     public interface FieldInterface
     {
-        public Task<Fielddto> addRecords(Fielddto field);
+        public Task<Fielddto> Arecords(Fielddto field);
 
-        public Task<IEnumerable<Fielddto>> viewRecords(Guid id);
+        public Task<IEnumerable<Fielddto>> Vrecords(Guid id);
 
-        public Task<IEnumerable<Aocolumn>> getColumns(string searchWord);
+        public Task<IEnumerable<Aocolumn>> Found(string searchWord);
 
-        public Task<Field> editRecords(Field updatedField);
+        public Task<Field> Erecords(Field updatedField);
 
-        public Task<IEnumerable<DomainTable>> getDomain(Guid TableId);
+        public Task<IEnumerable<DomainTable>> Domain(Guid TableId);
 
-        public Task<IEnumerable<Aotable>> getTable();
+        public Task<IEnumerable<Aotable>> Table();
 
-        public Task<IEnumerable<Form>> getForm();
+        public Task<IEnumerable<Form>> Form();
 
-        public  Task<IEnumerable<Form>> getFormsView(Guid formid);
+        public  Task<IEnumerable<Form>> Formsincom(Guid formid);
 
-        public Task<IEnumerable<Aotable>> getDomainView(Guid domainid);
+        public Task<IEnumerable<Aotable>> Domaincom(Guid domainid);
 
 
 
