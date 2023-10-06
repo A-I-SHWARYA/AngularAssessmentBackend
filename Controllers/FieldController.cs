@@ -28,8 +28,8 @@ namespace Angularassessment.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> Arecords([FromBody] Fielddto field)
+        [HttpPost("arecord")]
+        public async Task<IActionResult> Addrecords([FromBody] Fielddto field)
         {
 
 
@@ -37,7 +37,7 @@ namespace Angularassessment.Controllers
             {
                 if (field != null)
                 {
-                    var addedrecord = await fieldInterface.Arecords(field);
+                    var addedrecord = await fieldInterface.Addrecords(field);
                     if (addedrecord != null)
                     {
                         return Ok(addedrecord);
@@ -66,11 +66,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Vrecords/{ColumnId}")]
-        public async Task<IActionResult> Vrecords([FromRoute] Guid ColumnId)
+        public async Task<IActionResult> Viewfieldrecords([FromRoute] Guid ColumnId)
         {
             try
             {
-                var fields = await fieldInterface.Vrecords(ColumnId);
+                var fields = await fieldInterface.Viewfieldrecords(ColumnId);
                 if (fields != null)
                 {
                     return Ok(fields);
@@ -90,11 +90,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Domain/{tableid}")]
-        public async Task<IActionResult> Domain([FromRoute] Guid tableid)
+        public async Task<IActionResult> Getdomaindata([FromRoute] Guid tableid)
         {
             try
             {
-                var records = await fieldInterface.Domain(tableid);
+                var records = await fieldInterface.Getdomaindata(tableid);
                 if (records != null)
                 {
                     return Ok(records);
@@ -110,11 +110,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Formsincom/{formid}")]
-        public async Task<IActionResult> Formsincom([FromRoute] Guid formid)
+        public async Task<IActionResult> Getformsinviewcomponent([FromRoute] Guid formid)
         {
             try
             {
-                var formsview = await fieldInterface.Formsincom(formid);
+                var formsview = await fieldInterface.Getformsinviewcomponent(formid);
                 if (formsview != null)
                 {
                     return Ok(formsview);
@@ -132,11 +132,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Domaincom/{domainid}")]
-        public async Task<IActionResult> Domaincom([FromRoute] Guid domainid)
+        public async Task<IActionResult> Getdomaininviewcomponent([FromRoute] Guid domainid)
         {
             try
             {
-                var domainview = await fieldInterface.Domaincom(domainid);
+                var domainview = await fieldInterface.Getdomaininviewcomponent(domainid);
                 if (domainview != null)
                 {
                     return Ok(domainview);
@@ -157,12 +157,12 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Found/{searchWord}")]
-        public async Task<IActionResult> Found([FromRoute] string searchWord)
+        public async Task<IActionResult> Searchcolumn([FromRoute] string searchWord)
         {
 
             try
             {
-                var Columns = await fieldInterface.Found(searchWord);
+                var Columns = await fieldInterface.Searchcolumn(searchWord);
                 if (Columns != null)
                 {
                     return Ok(Columns);
@@ -180,15 +180,15 @@ namespace Angularassessment.Controllers
 
 
 
-        [HttpPut]
-        public async Task<IActionResult> Erecords([FromBody] Field updatedField)
+        [HttpPut("erecord")]
+        public async Task<IActionResult> Editfieldrecords([FromBody] Field updatedField)
         {
             try
             {
                 if (updatedField != null)
                 {
                     
-                    var editrecord = await fieldInterface.Erecords( updatedField);
+                    var editrecord = await fieldInterface.Editfieldrecords( updatedField);
                     if (editrecord != null)
                     {
                         return Ok(editrecord);
@@ -219,11 +219,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Table")]
-        public async Task<IActionResult> Table()
+        public async Task<IActionResult> Getaotable()
         {
             try
             {
-                var domain = await fieldInterface.Table();
+                var domain = await fieldInterface.Getaotable();
                 if (domain != null)
                 {
                     return Ok(domain);
@@ -241,11 +241,11 @@ namespace Angularassessment.Controllers
 
 
         [HttpGet("Form")]
-        public async Task<IActionResult> Form()
+        public async Task<IActionResult> Getform()
         {
             try
             {
-                var form = await fieldInterface.Form();
+                var form = await fieldInterface.Getform();
                 if (form != null)
                 {
                     return Ok(form);

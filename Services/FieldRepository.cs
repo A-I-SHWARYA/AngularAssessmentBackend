@@ -20,7 +20,7 @@ namespace Angularassessment.Services
             this.mapper = mapper;
         }
 
-        public async Task<Fielddto> Arecords(Fielddto field)
+        public async Task<Fielddto> Addrecords(Fielddto field)
         {
             var record = mapper.Map<Field>(field);
             record.Id = Guid.NewGuid();
@@ -31,7 +31,7 @@ namespace Angularassessment.Services
 
       
 
-        public async Task<IEnumerable<Fielddto>> Vrecords(Guid id)
+        public async Task<IEnumerable<Fielddto>> Viewfieldrecords(Guid id)
         {
             var fields = await demoContext.Fields
                 .Include(f => f.Column)
@@ -44,7 +44,7 @@ namespace Angularassessment.Services
             return fieldDtos;
         }
 
-        public async Task<IEnumerable<Aocolumn>> Found(string searchWord)
+        public async Task<IEnumerable<Aocolumn>> Searchcolumn(string searchWord)
         {
             var columns = await demoContext.Aocolumns
             .Where(c => c.Name.Contains(searchWord))
@@ -53,7 +53,7 @@ namespace Angularassessment.Services
             return columns;
         }
 
-        public async Task<Field> Erecords( Field updatedField)
+        public async Task<Field> Editfieldrecords( Field updatedField)
         {
             
             
@@ -69,7 +69,7 @@ namespace Angularassessment.Services
 
 
 
-        public async Task<IEnumerable<DomainTable>> Domain(Guid TableId)
+        public async Task<IEnumerable<DomainTable>> Getdomaindata(Guid TableId)
         {
 
             var domainTableList = await demoContext.DomainTables
@@ -85,7 +85,7 @@ namespace Angularassessment.Services
         }
 
 
-        public async Task<IEnumerable<Form>> Formsincom(Guid formid)
+        public async Task<IEnumerable<Form>> Getformsinviewcomponent(Guid formid)
         {
             var formsforview = await demoContext.Forms
            .Where(dt => dt.Id == formid)
@@ -97,7 +97,7 @@ namespace Angularassessment.Services
 
 
 
-        public async Task<IEnumerable<Aotable>> Domaincom(Guid domainid)
+        public async Task<IEnumerable<Aotable>> Getdomaininviewcomponent(Guid domainid)
         {
             var domainTable = await demoContext.DomainTables
                 .Where(dt => dt.Id == domainid)
@@ -123,14 +123,14 @@ namespace Angularassessment.Services
 
 
 
-        public async Task<IEnumerable<Aotable>> Table()
+        public async Task<IEnumerable<Aotable>> Getaotable()
          {
              var tables = await demoContext.Aotables.ToListAsync();
              return tables;
 
          }
 
-        public async Task<IEnumerable<Form>> Form()
+        public async Task<IEnumerable<Form>> Getform()
         {
             var Forms = await demoContext.Forms.ToListAsync();
             return Forms;

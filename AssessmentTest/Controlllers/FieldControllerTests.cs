@@ -41,15 +41,15 @@ namespace AssessmentTest.Controlllers
         //Adding  Field table record
 
         [Fact]
-        public async Task Arecords_ShouldReturnOk_WhenSuccess()
+        public async Task Addrecords_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             var fields = fixture.Create<Fielddto>();
             var returnData = fixture.Create<Fielddto>();
-            fieldInterface.Setup(t => t.Arecords(fields)).ReturnsAsync(returnData);
+            fieldInterface.Setup(t => t.Addrecords(fields)).ReturnsAsync(returnData);
 
             // Act
-            var result = await fieldController.Arecords(fields) as OkObjectResult;
+            var result = await fieldController.Addrecords(fields) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -60,57 +60,57 @@ namespace AssessmentTest.Controlllers
 
             addedData.Should().BeEquivalentTo(returnData); 
 
-            fieldInterface.Verify(t => t.Arecords(fields), Times.Once());
+            fieldInterface.Verify(t => t.Addrecords(fields), Times.Once());
         }
 
 
         [Fact]
-        public void Arecords_ShouldReturnBadRequest_WhenFieldObjectIsNull()
+        public void Addrecords_ShouldReturnBadRequest_WhenFieldObjectIsNull()
         {
             //Arrange
             Fielddto field = null;
-            fieldInterface.Setup(t => t.Arecords(field)).ReturnsAsync((Fielddto)null);
+            fieldInterface.Setup(t => t.Addrecords(field)).ReturnsAsync((Fielddto)null);
 
             //Act
-            var result = fieldController.Arecords(field);
+            var result = fieldController.Addrecords(field);
 
             //Assert
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<Task<IActionResult>>();
             result.Result.Should().BeAssignableTo<BadRequestResult>();
-            fieldInterface.Verify(t => t.Arecords(field), Times.Never());
+            fieldInterface.Verify(t => t.Addrecords(field), Times.Never());
         }
 
 
         [Fact]
-        public async Task Arecords_ShouldReturnNotFound_WhenAddFailed()
+        public async Task Addrecords_ShouldReturnNotFound_WhenAddFailed()
         {
             var fields = fixture.Create<Fielddto>();
-            fieldInterface.Setup(c => c.Arecords(fields)).ReturnsAsync((Fielddto)null);
+            fieldInterface.Setup(c => c.Addrecords(fields)).ReturnsAsync((Fielddto)null);
 
             // Act
-            var result = await fieldController.Arecords(fields);
+            var result = await fieldController.Addrecords(fields);
 
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<NotFoundResult>(); 
 
-            fieldInterface.Verify(t => t.Arecords(fields), Times.Once());
+            fieldInterface.Verify(t => t.Addrecords(fields), Times.Once());
         }
 
 
 
 
         [Fact]
-        public async Task Arecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Addrecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
             var field = fixture.Create<Fielddto>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(t => t.Arecords(field)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(t => t.Addrecords(field)).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = await fieldController.Arecords(field) as BadRequestObjectResult;
+            var result = await fieldController.Addrecords(field) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -120,7 +120,7 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Arecords(field), Times.Once());
+            fieldInterface.Verify(t => t.Addrecords(field), Times.Once());
         }
 
 
@@ -132,15 +132,15 @@ namespace AssessmentTest.Controlllers
 
 
         [Fact]
-        public async Task Vrecords_ShouldReturnOk_WhenSuccess()
+        public async Task Viewfieldrecords_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var expectedfields = fixture.Create<IEnumerable<Fielddto>>();
-            fieldInterface.Setup(c => c.Vrecords(id)).ReturnsAsync(expectedfields);
+            fieldInterface.Setup(c => c.Viewfieldrecords(id)).ReturnsAsync(expectedfields);
 
             // Act
-            var result = await fieldController.Vrecords(id) as OkObjectResult;
+            var result = await fieldController.Viewfieldrecords(id) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -152,21 +152,21 @@ namespace AssessmentTest.Controlllers
             
             actualfields.Should().BeEquivalentTo(expectedfields);
 
-            fieldInterface.Verify(t => t.Vrecords(id), Times.Once());
+            fieldInterface.Verify(t => t.Viewfieldrecords(id), Times.Once());
         }
 
 
 
 
         [Fact]
-        public async Task Vrecords_ShouldReturnNotFound_WhenDataNotFound()
+        public async Task Viewfieldrecords_ShouldReturnNotFound_WhenDataNotFound()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
-            fieldInterface.Setup(c => c.Vrecords(id)).Returns(Task.FromResult<IEnumerable<Fielddto>>(null));
+            fieldInterface.Setup(c => c.Viewfieldrecords(id)).Returns(Task.FromResult<IEnumerable<Fielddto>>(null));
 
             // Act
-            var result = await fieldController.Vrecords(id) as NotFoundObjectResult;
+            var result = await fieldController.Viewfieldrecords(id) as NotFoundObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -176,21 +176,21 @@ namespace AssessmentTest.Controlllers
             errorMessage.Should().NotBeNull();
             errorMessage.Should().Be("fields not found");
 
-            fieldInterface.Verify(t => t.Vrecords(id), Times.Once());
+            fieldInterface.Verify(t => t.Viewfieldrecords(id), Times.Once());
         }
 
 
 
         [Fact]
-        public async Task Vrecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Viewfieldrecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(c => c.Vrecords(id)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(c => c.Viewfieldrecords(id)).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = await fieldController.Vrecords(id) as BadRequestObjectResult;
+            var result = await fieldController.Viewfieldrecords(id) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -200,7 +200,7 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Vrecords(id), Times.Once());
+            fieldInterface.Verify(t => t.Viewfieldrecords(id), Times.Once());
         }
 
 
@@ -208,15 +208,15 @@ namespace AssessmentTest.Controlllers
         //GetFormNames
 
         [Fact]
-        public async Task Form_ShouldReturnOk_WhenSuccess()
+        public async Task Getform_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             
             var expectedfields = fixture.Create<IEnumerable<Form>>();
-            fieldInterface.Setup(c => c.Form()).ReturnsAsync(expectedfields);
+            fieldInterface.Setup(c => c.Getform()).ReturnsAsync(expectedfields);
 
             // Act
-            var result = await fieldController.Form() as OkObjectResult;
+            var result = await fieldController.Getform() as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -228,21 +228,21 @@ namespace AssessmentTest.Controlllers
             
             actualfields.Should().BeEquivalentTo(expectedfields);
 
-            fieldInterface.Verify(t => t.Form(), Times.Once());
+            fieldInterface.Verify(t => t.Getform(), Times.Once());
         }
 
 
 
 
        [Fact]
-        public async Task Form_ShouldReturnNotFound_WhenDataNotFound()
+        public async Task Getform_ShouldReturnNotFound_WhenDataNotFound()
         {
             // Arrange
             
-            fieldInterface.Setup(c => c.Form()).Returns(Task.FromResult<IEnumerable<Form>>(null));
+            fieldInterface.Setup(c => c.Getform()).Returns(Task.FromResult<IEnumerable<Form>>(null));
 
             // Act
-            var result = await fieldController.Form() as NotFoundResult;
+            var result = await fieldController.Getform() as NotFoundResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -250,21 +250,21 @@ namespace AssessmentTest.Controlllers
 
            
 
-            fieldInterface.Verify(t => t.Form(), Times.Once());
+            fieldInterface.Verify(t => t.Getform(), Times.Once());
         }
 
 
 
          [Fact]
-        public async Task Form_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Getform_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
            
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(c => c.Form()).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(c => c.Getform()).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = await fieldController.Form() as BadRequestObjectResult;
+            var result = await fieldController.Getform() as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -274,22 +274,22 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Form(), Times.Once());
+            fieldInterface.Verify(t => t.Getform(), Times.Once());
         }
 
 
         //GetFormsinview
 
         [Fact]
-        public async Task Formsincom_ShouldReturnOk_WhenSuccess()
+        public async Task Getformsinviewcomponent_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var expectedfields = fixture.Create<IEnumerable<Form>>();
-            fieldInterface.Setup(c => c.Formsincom(id)).ReturnsAsync(expectedfields);
+            fieldInterface.Setup(c => c.Getformsinviewcomponent(id)).ReturnsAsync(expectedfields);
 
             // Act
-            var result = await fieldController.Formsincom(id) as OkObjectResult;
+            var result = await fieldController.Getformsinviewcomponent(id) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -301,21 +301,21 @@ namespace AssessmentTest.Controlllers
            
             actualfields.Should().BeEquivalentTo(expectedfields);
 
-            fieldInterface.Verify(t => t.Formsincom(id), Times.Once());
+            fieldInterface.Verify(t => t.Getformsinviewcomponent(id), Times.Once());
         }
 
 
 
        [Fact]
-        public async Task Formsincom_ShouldReturnNotFound_WhenDataNotFound()
+        public async Task Getformsinviewcomponent_ShouldReturnNotFound_WhenDataNotFound()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
 
-            fieldInterface.Setup(c => c.Formsincom(id)).Returns(Task.FromResult<IEnumerable<Form>>(null));
+            fieldInterface.Setup(c => c.Getformsinviewcomponent(id)).Returns(Task.FromResult<IEnumerable<Form>>(null));
 
             // Act
-            var result = await fieldController.Formsincom(id) as NotFoundObjectResult;
+            var result = await fieldController.Getformsinviewcomponent(id) as NotFoundObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -325,20 +325,20 @@ namespace AssessmentTest.Controlllers
             errorMessage.Should().NotBeNull();
             errorMessage.Should().Be("forms not found");
 
-            fieldInterface.Verify(t => t.Formsincom(id), Times.Once());
+            fieldInterface.Verify(t => t.Getformsinviewcomponent(id), Times.Once());
         }
 
 
         [Fact]
-       public async Task Formsincom_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+       public async Task Getformsinviewcomponent_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
        {
            // Arrange
            Guid id = fixture.Create<Guid>();
            var exceptionMessage = "ExpectedExceptionMessage";
-           fieldInterface.Setup(c => c.Formsincom(id)).Throws(new Exception(exceptionMessage));
+           fieldInterface.Setup(c => c.Getformsinviewcomponent(id)).Throws(new Exception(exceptionMessage));
 
            // Act
-           var result = await fieldController.Formsincom(id) as BadRequestObjectResult;
+           var result = await fieldController.Getformsinviewcomponent(id) as BadRequestObjectResult;
 
            // Assert
            result.Should().NotBeNull();
@@ -348,7 +348,7 @@ namespace AssessmentTest.Controlllers
            actualExceptionMessage.Should().NotBeNull();
            actualExceptionMessage.Should().Be(exceptionMessage);
 
-           fieldInterface.Verify(t => t.Formsincom(id), Times.Once());
+           fieldInterface.Verify(t => t.Getformsinviewcomponent(id), Times.Once());
        }
 
 
@@ -356,15 +356,15 @@ namespace AssessmentTest.Controlllers
         //GetDomainTableNames
 
          [Fact]
-         public async Task Table_ShouldReturnOk_WhenSuccess()
+         public async Task Getaotable_ShouldReturnOk_WhenSuccess()
          {
              // Arrange
 
              var expectedfields = fixture.Create<IEnumerable<Aotable>>();
-             fieldInterface.Setup(c => c.Table()).ReturnsAsync(expectedfields);
+             fieldInterface.Setup(c => c.Getaotable()).ReturnsAsync(expectedfields);
 
              // Act
-             var result = await fieldController.Table() as OkObjectResult;
+             var result = await fieldController.Getaotable() as OkObjectResult;
 
              // Assert
              result.Should().NotBeNull();
@@ -376,21 +376,21 @@ namespace AssessmentTest.Controlllers
 
              actualfields.Should().BeEquivalentTo(expectedfields);
 
-             fieldInterface.Verify(t => t.Table(), Times.Once());
+             fieldInterface.Verify(t => t.Getaotable(), Times.Once());
          }
 
 
 
 
          [Fact]
-         public async Task Table_ShouldReturnNotFound_WhenDataNotFound()
+         public async Task Getaotable_ShouldReturnNotFound_WhenDataNotFound()
          {
              // Arrange
 
-             fieldInterface.Setup(c => c.Table()).Returns(Task.FromResult<IEnumerable<Aotable>>(null));
+             fieldInterface.Setup(c => c.Getaotable()).Returns(Task.FromResult<IEnumerable<Aotable>>(null));
 
              // Act
-             var result = await fieldController.Table() as NotFoundResult;
+             var result = await fieldController.Getaotable() as NotFoundResult;
 
              // Assert
              result.Should().NotBeNull();
@@ -398,21 +398,21 @@ namespace AssessmentTest.Controlllers
 
 
 
-             fieldInterface.Verify(t => t.Table(), Times.Once());
+             fieldInterface.Verify(t => t.Getaotable(), Times.Once());
          }
 
 
 
          [Fact]
-         public async Task Table_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+         public async Task Getaotable_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
          {
              // Arrange
 
              var exceptionMessage = "ExpectedExceptionMessage";
-             fieldInterface.Setup(c => c.Table()).Throws(new Exception(exceptionMessage));
+             fieldInterface.Setup(c => c.Getaotable()).Throws(new Exception(exceptionMessage));
 
              // Act
-             var result = await fieldController.Table() as BadRequestObjectResult;
+             var result = await fieldController.Getaotable() as BadRequestObjectResult;
 
              // Assert
              result.Should().NotBeNull();
@@ -422,7 +422,7 @@ namespace AssessmentTest.Controlllers
              actualExceptionMessage.Should().NotBeNull();
              actualExceptionMessage.Should().Be(exceptionMessage);
 
-             fieldInterface.Verify(t => t.Table(), Times.Once());
+             fieldInterface.Verify(t => t.Getaotable(), Times.Once());
          }
 
 
@@ -433,15 +433,15 @@ namespace AssessmentTest.Controlllers
 
         //GetDomaininview
         [Fact]
-        public async Task Domaincom_ShouldReturnOk_WhenSuccess()
+        public async Task Getdomaininviewcomponent_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var expectedfields = fixture.Create<IEnumerable<Aotable>>();
-            fieldInterface.Setup(c => c.Domaincom(id)).ReturnsAsync(expectedfields);
+            fieldInterface.Setup(c => c.Getdomaininviewcomponent(id)).ReturnsAsync(expectedfields);
            
             // Act
-            var result = await fieldController.Domaincom(id) as OkObjectResult;
+            var result = await fieldController.Getdomaininviewcomponent(id) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -453,21 +453,21 @@ namespace AssessmentTest.Controlllers
             // Check if the actualColumns and expectedColumns are the same
             actualfields.Should().BeEquivalentTo(expectedfields);
 
-            fieldInterface.Verify(t => t.Domaincom(id), Times.Once());
+            fieldInterface.Verify(t => t.Getdomaininviewcomponent(id), Times.Once());
         }
 
 
 
         [Fact]
-        public async Task Domaincom_ShouldReturnNotFound_WhenDataNotFound()
+        public async Task Getdomaininviewcomponent_ShouldReturnNotFound_WhenDataNotFound()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
 
-            fieldInterface.Setup(c => c.Domaincom(id)).Returns(Task.FromResult<IEnumerable<Aotable>>(null));
+            fieldInterface.Setup(c => c.Getdomaininviewcomponent(id)).Returns(Task.FromResult<IEnumerable<Aotable>>(null));
 
             // Act
-            var result = await fieldController.Domaincom(id) as NotFoundObjectResult;
+            var result = await fieldController.Getdomaininviewcomponent(id) as NotFoundObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -477,20 +477,20 @@ namespace AssessmentTest.Controlllers
             errorMessage.Should().NotBeNull();
             errorMessage.Should().Be("tables not found");
 
-            fieldInterface.Verify(t => t.Domaincom(id), Times.Once());
+            fieldInterface.Verify(t => t.Getdomaininviewcomponent(id), Times.Once());
         }
 
 
         [Fact]
-        public async Task Domaincom_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Getdomaininviewcomponent_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(c => c.Domaincom(id)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(c => c.Getdomaininviewcomponent(id)).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = await fieldController.Domaincom(id) as BadRequestObjectResult;
+            var result = await fieldController.Getdomaininviewcomponent(id) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -500,7 +500,7 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Domaincom(id), Times.Once());
+            fieldInterface.Verify(t => t.Getdomaininviewcomponent(id), Times.Once());
         }
 
 
@@ -525,15 +525,15 @@ namespace AssessmentTest.Controlllers
 
 
         [Fact]
-         public async Task Domain_ShouldReturnOk_WhenSuccess()
+         public async Task Getdomaindata_ShouldReturnOk_WhenSuccess()
          {
              // Arrange
              Guid id = fixture.Create<Guid>();
              var expectedfields = fixture.Create<IEnumerable<DomainTable>>();
-             fieldInterface.Setup(c => c.Domain(id)).ReturnsAsync(expectedfields);
+             fieldInterface.Setup(c => c.Getdomaindata(id)).ReturnsAsync(expectedfields);
 
              // Act
-             var result = await fieldController.Domain(id) as OkObjectResult;
+             var result = await fieldController.Getdomaindata(id) as OkObjectResult;
 
              // Assert
              result.Should().NotBeNull();
@@ -545,21 +545,21 @@ namespace AssessmentTest.Controlllers
              
              actualfields.Should().BeEquivalentTo(expectedfields);
 
-             fieldInterface.Verify(t => t.Domain(id), Times.Once());
+             fieldInterface.Verify(t => t.Getdomaindata(id), Times.Once());
          }
 
 
 
         [Fact]
-       public async Task Domain_ShouldReturnNotFound_WhenDataNotFound()
+       public async Task Getdomaindata_ShouldReturnNotFound_WhenDataNotFound()
        {
            // Arrange
            Guid id = fixture.Create<Guid>();
          
-           fieldInterface.Setup(c => c.Domain(id)).Returns(Task.FromResult<IEnumerable<DomainTable>>(null));
+           fieldInterface.Setup(c => c.Getdomaindata(id)).Returns(Task.FromResult<IEnumerable<DomainTable>>(null));
 
            // Act
-           var result = await fieldController.Domain(id) as NotFoundObjectResult;
+           var result = await fieldController.Getdomaindata(id) as NotFoundObjectResult;
 
            // Assert
            result.Should().NotBeNull();
@@ -569,7 +569,7 @@ namespace AssessmentTest.Controlllers
            errorMessage.Should().NotBeNull();
            errorMessage.Should().Be("records not found");
 
-           fieldInterface.Verify(t => t.Domain(id), Times.Once());
+           fieldInterface.Verify(t => t.Getdomaindata(id), Times.Once());
        }
 
 
@@ -577,15 +577,15 @@ namespace AssessmentTest.Controlllers
 
 
         [Fact]
-        public async Task Domain_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Getdomaindata_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
             Guid id = fixture.Create<Guid>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(c => c.Domain(id)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(c => c.Getdomaindata(id)).Throws(new Exception(exceptionMessage));
 
             // Act
-            var result = await fieldController.Domain(id) as BadRequestObjectResult;
+            var result = await fieldController.Getdomaindata(id) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -595,22 +595,22 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Domain(id), Times.Once());
+            fieldInterface.Verify(t => t.Getdomaindata(id), Times.Once());
         }
 
 
         //For fetching Aocolumn name
 
         [Fact]
-        public async Task Found_ShouldReturnOk_WhenSuccess()
+        public async Task Searchcolumn_ShouldReturnOk_WhenSuccess()
         {
             // Arrange
             var search = fixture.Create<string>();
             var expectedTables = fixture.Create<IEnumerable<Aocolumn>>();
-            fieldInterface.Setup(c => c.Found(search)).ReturnsAsync(expectedTables);
+            fieldInterface.Setup(c => c.Searchcolumn(search)).ReturnsAsync(expectedTables);
 
             // Act
-            var result = await fieldController.Found(search) as OkObjectResult;
+            var result = await fieldController.Searchcolumn(search) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -622,21 +622,21 @@ namespace AssessmentTest.Controlllers
             
             actualTables.Should().BeEquivalentTo(expectedTables);
 
-            fieldInterface.Verify(t => t.Found(search), Times.Once());
+            fieldInterface.Verify(t => t.Searchcolumn(search), Times.Once());
         }
 
 
 
         [Fact]
-        public async Task Found_ShouldReturnNotFound_WhenDataNotFound()
+        public async Task Searchcolumn_ShouldReturnNotFound_WhenDataNotFound()
         {
             // Arrange
             var word = fixture.Create<string>();
            
-            fieldInterface.Setup(c => c.Found(word)).Returns(Task.FromResult<IEnumerable<Aocolumn>>(null));
+            fieldInterface.Setup(c => c.Searchcolumn(word)).Returns(Task.FromResult<IEnumerable<Aocolumn>>(null));
 
             // Act
-            var result = await fieldController.Found(word) as NotFoundObjectResult;
+            var result = await fieldController.Searchcolumn(word) as NotFoundObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -646,20 +646,20 @@ namespace AssessmentTest.Controlllers
             errorMessage.Should().NotBeNull();
             errorMessage.Should().Be("Columns not found");
 
-            fieldInterface.Verify(t => t.Found(word), Times.Once());
+            fieldInterface.Verify(t => t.Searchcolumn(word), Times.Once());
         }
 
 
 
         [Fact]
-        public async Task Found_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Searchcolumn_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
             var name = fixture.Create<string>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(c => c.Found(name)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(c => c.Searchcolumn(name)).Throws(new Exception(exceptionMessage));
             // Act
-            var result = await fieldController.Found(name) as BadRequestObjectResult;
+            var result = await fieldController.Searchcolumn(name) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -669,7 +669,7 @@ namespace AssessmentTest.Controlllers
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
 
-            fieldInterface.Verify(t => t.Found(name), Times.Once());
+            fieldInterface.Verify(t => t.Searchcolumn(name), Times.Once());
         }
 
 
@@ -680,15 +680,15 @@ namespace AssessmentTest.Controlllers
 
 
         [Fact]
-        public async Task Erecords_ShouldReturnOk_WhenEditSuccess()
+        public async Task Editfieldrecords_ShouldReturnOk_WhenEditSuccess()
         {
             // Arrange
             var table = fixture.Create<Angularassessment.Models.Field>();
             var returnData = fixture.Create<Angularassessment.Models.Field>();
-            fieldInterface.Setup(t => t.Erecords( table)).ReturnsAsync(returnData);
+            fieldInterface.Setup(t => t.Editfieldrecords( table)).ReturnsAsync(returnData);
 
             // Act
-            var result = await fieldController.Erecords(table) as OkObjectResult;
+            var result = await fieldController.Editfieldrecords(table) as OkObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -699,27 +699,27 @@ namespace AssessmentTest.Controlllers
 
             editedData.Should().BeEquivalentTo(returnData); 
 
-            fieldInterface.Verify(t => t.Erecords(table), Times.Once());
+            fieldInterface.Verify(t => t.Editfieldrecords(table), Times.Once());
         }
 
 
 
         [Fact]
-        public void Erecords_ShouldReturnBadRequestResult_WhenEditFailed()
+        public void Editfieldrecords_ShouldReturnBadRequestResult_WhenEditFailed()
         {
             
             var Field = new Angularassessment.Models.Field();
             Field = null;
-            fieldInterface.Setup(t => t.Erecords(Field)).ReturnsAsync((Angularassessment.Models.Field)null);
+            fieldInterface.Setup(t => t.Editfieldrecords(Field)).ReturnsAsync((Angularassessment.Models.Field)null);
 
             // Act
-            var result = fieldController.Erecords(Field);
+            var result = fieldController.Editfieldrecords(Field);
 
             // Assert
             result.Should().NotBeNull();
             result.Result.Should().BeAssignableTo<BadRequestResult>();
 
-            fieldInterface.Verify(t => t.Erecords(Field), Times.Never()); 
+            fieldInterface.Verify(t => t.Editfieldrecords(Field), Times.Never()); 
         }
 
 
@@ -729,15 +729,15 @@ namespace AssessmentTest.Controlllers
 
 
         [Fact]
-        public async Task Erecords_ShouldReturnNotFoundObjectResult_WhenDataNotFound()
+        public async Task Editfieldrecords_ShouldReturnNotFoundObjectResult_WhenDataNotFound()
         {
             // Arrange
            
             var table = fixture.Create<Angularassessment.Models.Field>();
-            fieldInterface.Setup(t => t.Erecords( table)).Returns(Task.FromResult<Angularassessment.Models.Field>(null));
+            fieldInterface.Setup(t => t.Editfieldrecords( table)).Returns(Task.FromResult<Angularassessment.Models.Field>(null));
 
             // Act
-            var result = await fieldController.Erecords( table) as NotFoundObjectResult;
+            var result = await fieldController.Editfieldrecords( table) as NotFoundObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -747,21 +747,21 @@ namespace AssessmentTest.Controlllers
             errorMessage.Should().NotBeNull();
             errorMessage.Should().Be("Record cannot be editted!");
 
-            fieldInterface.Verify(t => t.Erecords( table), Times.Once());
+            fieldInterface.Verify(t => t.Editfieldrecords( table), Times.Once());
         }
 
 
 
         [Fact]
-        public async Task Erecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
+        public async Task Editfieldrecords_ShouldReturnBadRequestObjectResult_WhenAnExceptionOccurred()
         {
             // Arrange
            
             var table = fixture.Create<Angularassessment.Models.Field>();
             var exceptionMessage = "ExpectedExceptionMessage";
-            fieldInterface.Setup(t => t.Erecords( table)).Throws(new Exception(exceptionMessage));
+            fieldInterface.Setup(t => t.Editfieldrecords( table)).Throws(new Exception(exceptionMessage));
             // Act
-            var result = await fieldController.Erecords( table) as BadRequestObjectResult;
+            var result = await fieldController.Editfieldrecords( table) as BadRequestObjectResult;
 
             // Assert
             result.Should().NotBeNull();
@@ -770,7 +770,7 @@ namespace AssessmentTest.Controlllers
             var actualExceptionMessage = result.Value as string;
             actualExceptionMessage.Should().NotBeNull();
             actualExceptionMessage.Should().Be(exceptionMessage);
-            fieldInterface.Verify(t => t.Erecords( table), Times.Once());
+            fieldInterface.Verify(t => t.Editfieldrecords( table), Times.Once());
         }
 
 
